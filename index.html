@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PATI Feedforward Protocol</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --highlight: #10b981; /* Xanh lá */
+            --warning: #ef4444; /* Đỏ */
+            --info: #f59e0b; /* Vàng */
+            --box-bg: #f8f8f8; /* Xám nhạt */
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-color);
+            border-bottom: 3px solid var(--highlight);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            font-size: 24px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: -20px;
+            margin-bottom: 40px;
+        }
+
+        .collapsible {
+            background-color: var(--box-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid var(--highlight);
+        }
+
+        .collapsible:hover {
+            background-color: #f0f0f0;
+        }
+
+        .collapsible.active {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            margin-bottom: 0;
+        }
+
+        .collapsible:after {
+            content: '\25BC';
+            font-size: 14px;
+            color: var(--text-color);
+            transition: transform 0.3s ease;
+        }
+
+        .active:after {
+            transform: rotate(-180deg);
+        }
+
+        .content {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            border: 1px solid var(--box-bg);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            margin-bottom: 15px;
+        }
+
+        .content-inner {
+            padding: 20px 0;
+        }
+
+        .highlight-text {
+            color: var(--highlight);
+            font-weight: bold;
+        }
+        
+        .warning-text {
+            color: var(--warning);
+            font-weight: bold;
+        }
+
+        .info-box {
+            background-color: #fffbeb;
+            border-left: 4px solid var(--info);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .time-block {
+            background-color: var(--box-bg);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .time-header {
+            font-weight: bold;
+            color: var(--highlight);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        strong {
+            color: #000;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎯 PATI FEEDFORWARD PROTOCOL</h1>
+    <div class="subtitle">The Reflection Crucible (Lò rèn Mindset)</div>
+
+    <button class="collapsible">1. TẠI SAO CHÚNG TA CẦN FEEDFORWARD?</button>
+    <div class="content">
+        <div class="content-inner">
+            <p>Tại PATI, chúng ta tin rằng: <span class="highlight-text">Trải nghiệm + Sự soi chiếu (Reflection) = Sự chuyển hóa.</span></p>
+            <p>Việc đi làm hàng ngày là quá trình bạn dung nạp trải nghiệm. Nhưng nếu chỉ trải nghiệm mà không có một nhịp dừng lại để "soi chiếu", những kinh nghiệm đó sẽ chỉ là những mảnh ghép rời rạc.</p>
+            <p>Feedforward tại PATI <span class="warning-text">không phải là một buổi trò chuyện bề mặt hay báo cáo công việc</span>. Đây là <strong>The Crucible (Lò rèn)</strong> – nơi bạn ngồi lại 1-1 với đồng đội để tự vấn bản thân, nhìn thẳng vào thực tế, và nhận những góc nhìn sắc bén để "nâng cấp" chính mình cho tuần tiếp theo.</p>
+            <p>Chúng ta <span class="warning-text">không bới móc quá khứ (Feedback)</span>, chúng ta đưa ra góc nhìn và <span class="highlight-text">giải pháp cho tương lai (Feedforward)</span>.</p>
+        </div>
+    </div>
+
+    <button class="collapsible">2. NGUYÊN TẮC VẬN HÀNH (THE RULES)</button>
+    <div class="content">
+        <div class="content-inner">
+            <ul>
+                <li>⏱️ <strong>Nhịp độ:</strong> 30 phút/session (Mỗi tuần 1 người thực hiện 2 sessions với 2 đồng đội khác nhau).</li>
+                <li>📋 <strong>Chủ đề (The Weekly Prompt):</strong> Sẽ được Công ty công bố vào <strong>Thứ 2 hàng tuần</strong>. Chủ đề sẽ thay đổi linh hoạt để liên tục khai phá các góc nhìn mới về năng lực, sự phối hợp và mindset.</li>
+                <li>👥 <strong>Trách nhiệm của "Host":</strong> Người chủ động book lịch là Host. Bạn có trách nhiệm dẫn dắt cuộc hội thoại đúng trọng tâm của chủ đề tuần đó, <span class="warning-text">tuyệt đối không để 30 phút trôi qua bằng những câu chuyện lan man</span> hoặc chỉ để check tiến độ task.</li>
+                <li>✍️ <strong>Không bao giờ đến tay không:</strong> Cả hai phải dành ra ít nhất 5 phút tự Reflect (chuẩn bị) trước khi bước vào session. Bước vào với cái đầu rỗng là lãng phí thời gian của đồng đội.</li>
+            </ul>
+        </div>
+    </div>
+
+    <button class="collapsible">3. KHUNG GIAO TIẾP 30 PHÚT (THE FRAMEWORK)</button>
+    <div class="content">
+        <div class="content-inner">
+            <div class="time-block">
+                <div class="time-header">⏱️ Phút 0-10: Self-Reflection (Tự soi chiếu)</div>
+                <p>Host bắt đầu bằng việc chia sẻ góc nhìn dựa trên <strong>Chủ đề của tuần</strong>. Bất kể chủ đề là gì (công việc, tư duy, định hướng), hãy luôn dùng 2 câu hỏi "la bàn" để đào sâu vào gốc rễ vấn đề:</p>
+                <ul>
+                    <li><strong>The Peak (Điểm sáng - Nơi hội tụ năng lượng):</strong> Gắn với chủ đề, khoảnh khắc hay trải nghiệm nào khiến bạn cảm thấy trọn vẹn, hào hứng và được là chính mình nhất? <em>(Điều gì đã mang lại cho bạn nhiều năng lượng và cảm hứng nhất?)</em></li>
+                    <li><strong>The Drain (Điểm trũng - Nơi rò rỉ năng lượng):</strong> Xoay quanh chủ đề này, điều gì đang khiến bạn cảm thấy lấn cấn, bế tắc hoặc bị rút cạn năng lượng? <em>(Rào cản vô hình nào đang ngăn bạn đạt được trạng thái tốt nhất?)</em></li>
+                </ul>
+            </div>
+
+            <div class="time-block">
+                <div class="time-header">⏱️ Phút 10-25: Feedforward (Tiến về phía trước)</div>
+                <p>Đồng đội lắng nghe và bắt đầu cung cấp "Feedforward".</p>
+                <p><span class="warning-text">Nguyên tắc tối thượng: KHÔNG phán xét hay đổ lỗi cho quá khứ. CHỈ đưa ra góc nhìn, giải pháp và hành động cho tương lai.</span></p>
+                <ul>
+                    <li><em>"Với góc nhìn của tôi về rào cản bạn vừa chia sẻ, tuần sau bạn có thể thử..."</em></li>
+                    <li><em>"Điểm mạnh của bạn là X. Tuần tới, bạn nên ứng dụng hệ thống Y để nhân chuỗi giá trị đó lên..."</em></li>
+                    <li><em>"Để tôi hỗ trợ bạn tốt hơn vào tuần sau, bạn cần tôi thay đổi điều gì?"</em></li>
+                </ul>
+            </div>
+
+            <div class="time-block">
+                <div class="time-header">⏱️ Phút 25-30: The Commitment (Cam kết)</div>
+                <p>Kết thúc session, mỗi người chốt lại <strong>01 hành động hoặc 01 nguyên tắc duy nhất</strong> sẽ thay đổi/áp dụng ngay vào tuần sau. Không lan man nhiều mục tiêu.</p>
+            </div>
+        </div>
+    </div>
+
+    <button class="collapsible">4. "SÁT HẠCH" CHUYỂN HÓA SÁNG THỨ 7</button>
+    <div class="content">
+        <div class="content-inner">
+            <p>Vào sáng Thứ 7, toàn công ty sẽ có hoạt động chia sẻ Recap.</p>
+            <strong>Luật chơi:</strong>
+            <ol>
+                <li>📱 <span class="warning-text">Không đọc tài liệu/Slide:</span> Hãy kể câu chuyện của sự đúc kết từ bên trong bạn.</li>
+                <li>⏱️ <strong>Cấu trúc chia sẻ (1-2 phút/người):</strong>
+                    <ul>
+                        <li>Insight sắc bén nhất bạn đào được về chính mình trong tuần này là gì?</li>
+                        <li>Lời khuyên (Feedforward) đắt giá nhất bạn nhận được từ đồng đội là gì?</li>
+                        <li>Hành động bạn cam kết thực hiện bắt đầu từ tuần sau là gì?</li>
+                    </ul>
+                </li>
+            </ol>
+            
+            <div class="info-box">
+                <strong>💡 Lời nhắc từ Công ty:</strong><br>
+                Sự khắt khe trong việc nhìn nhận bản thân chính là biểu hiện của tính chính trực (Integrity) và tinh thần Radical Ownership. Tổ chức trân trọng những nhân sự dám nhìn thẳng vào giới hạn của mình, biến kinh nghiệm chắp vá thành sức mạnh nội tại, và liên tục "Learn fast" để bứt phá.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
+
+    // Mở sẵn section đầu tiên
+    if(coll.length > 0) {
+        coll[0].classList.add("active");
+        var firstContent = coll[0].nextElementSibling;
+        firstContent.style.maxHeight = firstContent.scrollHeight + "px";
+    }
+</script>
+
+</body>
+</html>
