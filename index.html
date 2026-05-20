@@ -5,255 +5,480 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PATI Feedforward Protocol</title>
     <style>
-        :root {
-            --bg-color: #ffffff;
-            --text-color: #1a1a1a;
-            --highlight: #10b981; /* Xanh lá */
-            --warning: #ef4444; /* Đỏ */
-            --info: #f59e0b; /* Vàng */
-            --box-bg: #f8f8f8; /* Xám nhạt */
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
+        * {
             margin: 0;
-            padding: 40px 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
         h1 {
             text-align: center;
-            color: var(--text-color);
-            border-bottom: 3px solid var(--highlight);
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            font-size: 24px;
+            color: #1a1a1a;
+            font-size: 36px;
+            margin-bottom: 10px;
+            font-weight: 700;
         }
 
         .subtitle {
             text-align: center;
-            font-style: italic;
             color: #666;
-            margin-top: -20px;
-            margin-bottom: 40px;
+            font-size: 16px;
+            margin-bottom: 30px;
+            font-weight: 400;
+            font-style: italic;
         }
 
-        .collapsible {
-            background-color: var(--box-bg);
-            color: var(--text-color);
-            cursor: pointer;
-            padding: 18px;
-            width: 100%;
-            border: none;
-            text-align: left;
-            outline: none;
-            font-size: 18px;
-            font-weight: bold;
+        .hero-box {
+            background: #10b981;
+            color: white;
+            padding: 25px;
             border-radius: 8px;
-            margin-bottom: 10px;
-            transition: 0.3s;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .hero-box .formula {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .hero-box .description {
+            font-size: 14px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        /* Collapsible Section Styles */
+        .section {
+            margin-bottom: 20px;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #f8f8f8;
+            padding: 18px 25px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #1a1a1a;
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-left: 5px solid var(--highlight);
+            transition: background 0.2s;
+            user-select: none;
         }
 
-        .collapsible:hover {
-            background-color: #f0f0f0;
+        .section-header:hover {
+            background: #f0f0f0;
         }
 
-        .collapsible.active {
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            margin-bottom: 0;
+        .section-header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .collapsible:after {
-            content: '\25BC';
-            font-size: 14px;
-            color: var(--text-color);
-            transition: transform 0.3s ease;
+        .toggle-icon {
+            font-size: 20px;
+            color: #10b981;
+            transition: transform 0.3s;
         }
 
-        .active:after {
-            transform: rotate(-180deg);
+        .section.active .toggle-icon {
+            transform: rotate(180deg);
         }
 
-        .content {
-            padding: 0 18px;
-            background-color: white;
+        .section-content {
+            padding: 0;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            border: 1px solid var(--box-bg);
-            border-top: none;
-            border-radius: 0 0 8px 8px;
-            margin-bottom: 15px;
+            transition: max-height 0.4s ease-out, padding 0.3s ease-out;
         }
 
-        .content-inner {
-            padding: 20px 0;
+        .section.active .section-content {
+            max-height: 3000px;
+            padding: 25px;
         }
 
-        .highlight-text {
-            color: var(--highlight);
-            font-weight: bold;
-        }
-        
-        .warning-text {
-            color: var(--warning);
-            font-weight: bold;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
-        .info-box {
-            background-color: #fffbeb;
-            border-left: 4px solid var(--info);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
+        .card {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 25px;
+            border-left: 4px solid #10b981;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        ul {
-            padding-left: 20px;
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.15);
         }
 
-        li {
+        .card-icon {
+            font-size: 36px;
             margin-bottom: 10px;
         }
 
-        .time-block {
-            background-color: var(--box-bg);
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 15px;
+        .card-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: #1a1a1a;
+            margin-bottom: 8px;
         }
 
-        .time-header {
-            font-weight: bold;
-            color: var(--highlight);
+        .card-text {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 25px 0;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #10b981;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            background: #f8f8f8;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #10b981;
+        }
+
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 25px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #10b981;
+            border: 3px solid white;
+        }
+
+        .timeline-time {
+            font-weight: 600;
+            color: #10b981;
+            font-size: 15px;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        
-        strong {
-            color: #000;
+
+        .timeline-content {
+            color: #1a1a1a;
+            font-size: 13px;
+            line-height: 1.6;
         }
 
+        .timeline-content strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .highlight-box-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: #ef4444;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .highlight-box strong {
+            color: #1a1a1a;
+        }
+
+        .recap-box {
+            background: #f0fdf4;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .recap-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #10b981;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .recap-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .recap-step {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #10b981;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .recap-step-num {
+            font-weight: 600;
+            color: #10b981;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .recap-step-text {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .footer-note {
+            background: #fef3c7;
+            border: 2px dashed #f59e0b;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .footer-note strong {
+            color: #f59e0b;
+            font-size: 16px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e5e5;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+            color: #666;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .recap-steps {
+                grid-template-columns: 1fr;
+            }
+            .section-header {
+                padding: 15px 20px;
+            }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🎯 PATI FEEDFORWARD PROTOCOL</h1>
-    <div class="subtitle">The Reflection Crucible (Lò rèn Mindset)</div>
+    <h1>🔄 FEEDFORWARD PROTOCOL</h1>
+    <div class="subtitle">Rèn luyện khả năng tư duy</div>
 
-    <button class="collapsible">1. TẠI SAO CHÚNG TA CẦN FEEDFORWARD?</button>
-    <div class="content">
-        <div class="content-inner">
-            <p>Tại PATI, chúng ta tin rằng: <span class="highlight-text">Trải nghiệm + Sự soi chiếu (Reflection) = Sự chuyển hóa.</span></p>
-            <p>Việc đi làm hàng ngày là quá trình bạn dung nạp trải nghiệm. Nhưng nếu chỉ trải nghiệm mà không có một nhịp dừng lại để "soi chiếu", những kinh nghiệm đó sẽ chỉ là những mảnh ghép rời rạc.</p>
-            <p>Feedforward tại PATI <span class="warning-text">không phải là một buổi trò chuyện bề mặt hay báo cáo công việc</span>. Đây là <strong>The Crucible (Lò rèn)</strong> – nơi bạn ngồi lại 1-1 với đồng đội để tự vấn bản thân, nhìn thẳng vào thực tế, và nhận những góc nhìn sắc bén để "nâng cấp" chính mình cho tuần tiếp theo.</p>
-            <p>Chúng ta <span class="warning-text">không bới móc quá khứ (Feedback)</span>, chúng ta đưa ra góc nhìn và <span class="highlight-text">giải pháp cho tương lai (Feedforward)</span>.</p>
+    <!-- Hero Formula -->
+    <div class="hero-box">
+        <div class="formula">✨ Trải nghiệm + Sự soi chiếu (Reflection) = Sự chuyển hóa</div>
+        <div class="description">
+            Feedforward không phải là báo cáo công việc. Đây là không gian để bạn tự vấn bản thân, nhận góc nhìn sắc bén từ đồng đội, và nâng cấp chính mình cho tuần tiếp theo.
         </div>
     </div>
 
-    <button class="collapsible">2. NGUYÊN TẮC VẬN HÀNH (THE RULES)</button>
-    <div class="content">
-        <div class="content-inner">
-            <ul>
-                <li>⏱️ <strong>Nhịp độ:</strong> 30 phút/session (Mỗi tuần 1 người thực hiện 2 sessions với 2 đồng đội khác nhau).</li>
-                <li>📋 <strong>Chủ đề (The Weekly Prompt):</strong> Sẽ được Công ty công bố vào <strong>Thứ 2 hàng tuần</strong>. Chủ đề sẽ thay đổi linh hoạt để liên tục khai phá các góc nhìn mới về năng lực, sự phối hợp và mindset.</li>
-                <li>👥 <strong>Trách nhiệm của "Host":</strong> Người chủ động book lịch là Host. Bạn có trách nhiệm dẫn dắt cuộc hội thoại đúng trọng tâm của chủ đề tuần đó, <span class="warning-text">tuyệt đối không để 30 phút trôi qua bằng những câu chuyện lan man</span> hoặc chỉ để check tiến độ task.</li>
-                <li>✍️ <strong>Không bao giờ đến tay không:</strong> Cả hai phải dành ra ít nhất 5 phút tự Reflect (chuẩn bị) trước khi bước vào session. Bước vào với cái đầu rỗng là lãng phí thời gian của đồng đội.</li>
-            </ul>
+    <!-- Section 1: Rules - OPENED BY DEFAULT -->
+    <div class="section active">
+        <div class="section-header" onclick="toggleSection(this)">
+            <div class="section-header-title">
+                <span>📋</span>
+                <span>NGUYÊN TẮC VẬN HÀNH</span>
+            </div>
+            <span class="toggle-icon">▼</span>
         </div>
-    </div>
-
-    <button class="collapsible">3. KHUNG GIAO TIẾP 30 PHÚT (THE FRAMEWORK)</button>
-    <div class="content">
-        <div class="content-inner">
-            <div class="time-block">
-                <div class="time-header">⏱️ Phút 0-10: Self-Reflection (Tự soi chiếu)</div>
-                <p>Host bắt đầu bằng việc chia sẻ góc nhìn dựa trên <strong>Chủ đề của tuần</strong>. Bất kể chủ đề là gì (công việc, tư duy, định hướng), hãy luôn dùng 2 câu hỏi "la bàn" để đào sâu vào gốc rễ vấn đề:</p>
-                <ul>
-                    <li><strong>The Peak (Điểm sáng - Nơi hội tụ năng lượng):</strong> Gắn với chủ đề, khoảnh khắc hay trải nghiệm nào khiến bạn cảm thấy trọn vẹn, hào hứng và được là chính mình nhất? <em>(Điều gì đã mang lại cho bạn nhiều năng lượng và cảm hứng nhất?)</em></li>
-                    <li><strong>The Drain (Điểm trũng - Nơi rò rỉ năng lượng):</strong> Xoay quanh chủ đề này, điều gì đang khiến bạn cảm thấy lấn cấn, bế tắc hoặc bị rút cạn năng lượng? <em>(Rào cản vô hình nào đang ngăn bạn đạt được trạng thái tốt nhất?)</em></li>
-                </ul>
-            </div>
-
-            <div class="time-block">
-                <div class="time-header">⏱️ Phút 10-25: Feedforward (Tiến về phía trước)</div>
-                <p>Đồng đội lắng nghe và bắt đầu cung cấp "Feedforward".</p>
-                <p><span class="warning-text">Nguyên tắc tối thượng: KHÔNG phán xét hay đổ lỗi cho quá khứ. CHỈ đưa ra góc nhìn, giải pháp và hành động cho tương lai.</span></p>
-                <ul>
-                    <li><em>"Với góc nhìn của tôi về rào cản bạn vừa chia sẻ, tuần sau bạn có thể thử..."</em></li>
-                    <li><em>"Điểm mạnh của bạn là X. Tuần tới, bạn nên ứng dụng hệ thống Y để nhân chuỗi giá trị đó lên..."</em></li>
-                    <li><em>"Để tôi hỗ trợ bạn tốt hơn vào tuần sau, bạn cần tôi thay đổi điều gì?"</em></li>
-                </ul>
-            </div>
-
-            <div class="time-block">
-                <div class="time-header">⏱️ Phút 25-30: The Commitment (Cam kết)</div>
-                <p>Kết thúc session, mỗi người chốt lại <strong>01 hành động hoặc 01 nguyên tắc duy nhất</strong> sẽ thay đổi/áp dụng ngay vào tuần sau. Không lan man nhiều mục tiêu.</p>
+        <div class="section-content">
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon">⏱️</div>
+                    <div class="card-title">Nhịp độ</div>
+                    <div class="card-text">30 phút/session<br>2 sessions/tuần với 2 đồng đội khác nhau</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📅</div>
+                    <div class="card-title">Chủ đề tuần</div>
+                    <div class="card-text">Công ty công bố mỗi <strong>Thứ 2</strong><br>Thay đổi linh hoạt để khai phá góc nhìn mới</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">👥</div>
+                    <div class="card-title">Vai trò Host</div>
+                    <div class="card-text">Người book lịch dẫn dắt cuộc hội thoại<br>Không để 30 phút trôi qua lan man</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✍️</div>
+                    <div class="card-title">Chuẩn bị</div>
+                    <div class="card-text">Dành 5 phút tự Reflect trước session<br>Không bao giờ đến tay không</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <button class="collapsible">4. "SÁT HẠCH" CHUYỂN HÓA SÁNG THỨ 7</button>
-    <div class="content">
-        <div class="content-inner">
-            <p>Vào sáng Thứ 7, toàn công ty sẽ có hoạt động chia sẻ Recap.</p>
-            <strong>Luật chơi:</strong>
-            <ol>
-                <li>📱 <span class="warning-text">Không đọc tài liệu/Slide:</span> Hãy kể câu chuyện của sự đúc kết từ bên trong bạn.</li>
-                <li>⏱️ <strong>Cấu trúc chia sẻ (1-2 phút/người):</strong>
-                    <ul>
-                        <li>Insight sắc bén nhất bạn đào được về chính mình trong tuần này là gì?</li>
-                        <li>Lời khuyên (Feedforward) đắt giá nhất bạn nhận được từ đồng đội là gì?</li>
-                        <li>Hành động bạn cam kết thực hiện bắt đầu từ tuần sau là gì?</li>
-                    </ul>
-                </li>
-            </ol>
-            
-            <div class="info-box">
-                <strong>💡 Lời nhắc từ Công ty:</strong><br>
-                Sự khắt khe trong việc nhìn nhận bản thân chính là biểu hiện của tính chính trực (Integrity) và tinh thần Radical Ownership. Tổ chức trân trọng những nhân sự dám nhìn thẳng vào giới hạn của mình, biến kinh nghiệm chắp vá thành sức mạnh nội tại, và liên tục "Learn fast" để bứt phá.
+    <!-- Section 2: 30-min Framework -->
+    <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+            <div class="section-header-title">
+                <span>🎯</span>
+                <span>KHUNG 30 PHÚT</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-time">⏱️ Phút 0-10: Self-Reflection</div>
+                    <div class="timeline-content">
+                        <strong>Host chia sẻ dựa trên chủ đề tuần:</strong>
+                        <ul>
+                            <li><strong>The Peak (Điểm sáng):</strong> Khoảnh khắc nào khiến bạn cảm thấy trọn vẹn, hào hứng nhất?</li>
+                            <li><strong>The Drain (Điểm trũng):</strong> Điều gì đang rút cạn năng lượng, khiến bạn bế tắc?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">⏱️ Phút 10-25: Feedforward</div>
+                    <div class="timeline-content">
+                        <strong>Đồng đội đưa ra góc nhìn & giải pháp cho tương lai:</strong>
+                        <ul>
+                            <li>"Với rào cản bạn chia sẻ, tuần sau bạn có thể thử..."</li>
+                            <li>"Điểm mạnh của bạn là X. Tuần tới áp dụng hệ thống Y để nhân giá trị lên..."</li>
+                            <li>"Để tôi hỗ trợ tốt hơn, bạn cần tôi thay đổi điều gì?"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">⏱️ Phút 25-30: Commitment</div>
+                    <div class="timeline-content">
+                        Mỗi người chốt <strong>01 hành động hoặc 01 nguyên tắc duy nhất</strong> sẽ áp dụng ngay vào tuần sau.<br>
+                        Không lan man nhiều mục tiêu.
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <div class="highlight-box-title">🚨 NGUYÊN TẮC TỐI THƯỢNG</div>
+                <strong>KHÔNG bới móc quá khứ (Feedback)</strong><br>
+                CHỈ đưa ra góc nhìn, giải pháp và hành động cho <strong>tương lai (Feedforward)</strong>
             </div>
         </div>
+    </div>
+
+    <!-- Section 3: Saturday Recap -->
+    <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+            <div class="section-header-title">
+                <span>🎤</span>
+                <span>REFLECT DAY - SÁNG THỨ 7</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+        </div>
+        <div class="section-content">
+            <div class="recap-box">
+                <div class="recap-title">📱 Không đọc tài liệu/Slide — Hãy kể câu chuyện từ bên trong bạn</div>
+                <div class="recap-steps">
+                    <div class="recap-step">
+                        <div class="recap-step-num">1️⃣ Insight sắc bén</div>
+                        <div class="recap-step-text">Bạn đào được điều gì về chính mình trong tuần này?</div>
+                    </div>
+                    <div class="recap-step">
+                        <div class="recap-step-num">2️⃣ Feedforward đắt giá</div>
+                        <div class="recap-step-text">Lời khuyên nào từ đồng đội làm bạn "sáng mắt"?</div>
+                    </div>
+                    <div class="recap-step">
+                        <div class="recap-step-num">3️⃣ Cam kết hành động</div>
+                        <div class="recap-step-text">Bạn sẽ thực hiện điều gì bắt đầu từ tuần sau?</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Note -->
+    <div class="footer-note">
+        <strong>💡 LỜI NHẮC TỪ CÔNG TY</strong><br><br>
+        Sự khắt khe trong việc nhìn nhận bản thân chính là biểu hiện của <strong>Integrity</strong> và <strong>Radical Ownership</strong>.<br>
+        Tổ chức trân trọng những nhân sự dám nhìn thẳng vào giới hạn của mình, biến kinh nghiệm thành sức mạnh nội tại, và liên tục <strong>Learn fast</strong> để bứt phá.
+    </div>
+
+    <div class="footer">
+        <strong>Last updated:</strong> May 2026 | <strong>Owner:</strong> People Team | <strong>Version:</strong> 1.0
     </div>
 </div>
 
 <script>
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
-
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
-        });
-    }
-
-    // Mở sẵn section đầu tiên
-    if(coll.length > 0) {
-        coll[0].classList.add("active");
-        var firstContent = coll[0].nextElementSibling;
-        firstContent.style.maxHeight = firstContent.scrollHeight + "px";
+    function toggleSection(header) {
+        const section = header.parentElement;
+        section.classList.toggle('active');
     }
 </script>
 
